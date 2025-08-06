@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36327.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HF1 Loops", "HF1 Loops\HF1 Loops.csproj", "{BD07469F-7BF1-4A19-A5B1-04C09FAFDDA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HF1 XUnit Test Loops", "HF1 XUnit Test Loops\HF1 XUnit Test Loops.csproj", "{EDCD9389-98A4-4CD5-8463-A01769F4339E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD07469F-7BF1-4A19-A5B1-04C09FAFDDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD07469F-7BF1-4A19-A5B1-04C09FAFDDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD07469F-7BF1-4A19-A5B1-04C09FAFDDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD07469F-7BF1-4A19-A5B1-04C09FAFDDA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDCD9389-98A4-4CD5-8463-A01769F4339E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCD9389-98A4-4CD5-8463-A01769F4339E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCD9389-98A4-4CD5-8463-A01769F4339E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCD9389-98A4-4CD5-8463-A01769F4339E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE0B46DB-2D48-42EA-BA4A-DDCAC51D2579}
+	EndGlobalSection
+EndGlobal
