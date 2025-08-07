@@ -1,0 +1,38 @@
+namespace HF1_XUnit_Test_Loops
+{
+    public class (NameOfMethod)
+    {
+        [Fact]
+        public void Test1()
+        {
+            //Arrange
+            int expected = (Answer);
+
+            //Act
+            int actual = (Test køre);
+
+            //Assert
+            Assert.Equal(expected, actual)//(Svaret på testen);
+        }
+    }
+}
+
+
+How to connencet the unit test to the projekt:
+
+right click on the XUnit test folder.
+
+click add and after click on projekt reference.
+
+Then find the projekt and press the white box so it has a marker.
+
+Then press OK and your done.
+
+
+Huske ting:
+
+HUSK at gøre din class public
+
+HUSK at gøre din Method public static int
+
+HUSK at gøre din Main public static
