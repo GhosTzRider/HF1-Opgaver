@@ -7,7 +7,7 @@ namespace Terningespil
         static void Main(string[] args)
         {
             Dice dice = new Dice();
-            Console.WriteLine("how many dices do you want to roll: ");
+            Console.WriteLine("how many dices do you want to roll: :");
             int numberOfDices = int.Parse(Console.ReadLine() ?? "1");
             for (int i = 0; i < numberOfDices; i++)
             {
