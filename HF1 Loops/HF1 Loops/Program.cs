@@ -1,8 +1,8 @@
 ﻿namespace HF1_Loops
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             MultiplicationTable();
 
@@ -196,7 +196,7 @@
             return result;
         }
 
-        static int ToThePowerOfNextNumber(int a, int b)
+        public int ToThePowerOfNextNumber(int a, int b)
         {
             int result = 1;
             for (int i = 1; i <= b; i++)

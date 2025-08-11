@@ -6,10 +6,10 @@ namespace HF1_XUnit_Test_Loops
         public void Test1()
         {
             //Arrange
-            int expected = -2;
-
+            int expected = -8;
+            HF1_Loops.Program program = new HF1_Loops.Program();   
             //Act
-            int actual = HF1_Loops.Program.ToThePowerOfNextNumber(-2, 3);
+            int actual = program.ToThePowerOfNextNumber(-2, 3);
 
             //Assert  
             Assert.Equal(expected, actual);
