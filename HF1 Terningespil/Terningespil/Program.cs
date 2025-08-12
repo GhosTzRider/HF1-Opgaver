@@ -27,4 +27,4 @@ public class Dice
         Random rnd = new Random();
         Value = rnd.Next(1, 7);
     }
-}
+}   
