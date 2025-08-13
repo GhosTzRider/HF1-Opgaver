@@ -46,10 +46,11 @@ class Program
                 List<int> savedDice = new List<int>();
                 List<int> rollingDice = RollDice(5);
 
-                ShowDice(savedDice, rollingDice);
-
-                for (int rollNumber = 1; rollNumber <= 2; rollNumber++)
+                int rolls = 0;
+                while (rolls < 2 && savedDice.Count < 5)
                 {
+                    ShowDice(savedDice, rollingDice);
+
                     Console.WriteLine("Skriv numrene på terninger du vil gemme (adskilt med mellemrum) eller tryk Enter for at slå igen:");
                     string input = Console.ReadLine();
 
@@ -80,16 +81,53 @@ class Program
                         }
                     }
 
-                    if (rollingDice.Count > 0)
+                    rolls++;
+                    if (rolls < 3 && rollingDice.Count > 0 && savedDice.Count < 5)
+                    {
                         rollingDice = RollDice(rollingDice.Count);
-
-                    ShowDice(savedDice, rollingDice);
-
-                    if (savedDice.Count == 5)
-                        break;
+                    }
                 }
 
-                savedDice.AddRange(rollingDice);
+                // After all rolls, let the user pick which of the remaining dice to keep, if any
+                while (savedDice.Count < 5 && rollingDice.Count > 0)
+                {
+                    ShowDice(savedDice, rollingDice);
+                    Console.WriteLine("Vælg hvilke terninger du vil gemme (adskilt med mellemrum), eller tryk Enter for at gemme alle resterende:");
+                    string input = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        savedDice.AddRange(rollingDice);
+                        rollingDice.Clear();
+                    }
+                    else
+                    {
+                        string[] parts = input.Split(' ');
+                        List<int> toSave = new List<int>();
+
+                        foreach (string part in parts)
+                        {
+                            if (int.TryParse(part, out int index))
+                            {
+                                index -= 1;
+                                if (index >= 0 && index < rollingDice.Count && !toSave.Contains(index))
+                                {
+                                    toSave.Add(index);
+                                }
+                            }
+                        }
+
+                        toSave.Sort();
+                        toSave.Reverse();
+
+                        foreach (int i in toSave)
+                        {
+                            savedDice.Add(rollingDice[i]);
+                            rollingDice.RemoveAt(i);
+                        }
+                    }
+                }
+
                 int[] finalDice = savedDice.ToArray();
 
                 ShowAvailableCategories(player);
@@ -113,7 +151,7 @@ class Program
                 Console.ReadKey();
             }
         }
-
+         
         Console.Clear();
         Console.WriteLine("Spillet er slut! Resultater:");
         foreach (Player p in players)
