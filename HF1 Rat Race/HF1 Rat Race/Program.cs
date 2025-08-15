@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace HF1_Rat_Race
 {
@@ -10,28 +11,22 @@ namespace HF1_Rat_Race
             var manager = new RaceManager();
             var bookmaker = new Bookmaker();
 
-            
             var track = manager.CreateTrack("Downtown Dash", 30);
-
-            
             var rat1 = manager.CreateRat("Speedy");
             var rat2 = manager.CreateRat("Cheddar");
             var rat3 = manager.CreateRat("Nibbles");
 
-            
             var player = manager.CreatePlayer("You", 100);
 
-            Console.WriteLine(" Welcome to the Rat Race! ");
+            Console.WriteLine("Welcome to the Rat Race!");
 
-           
             while (player.Money > 0)
             {
-                Console.WriteLine($"\n💰 You have {player.Money} coins.");
+                Console.WriteLine($"\nYou have {player.Money} coins.");
                 Console.WriteLine("Rats in the race:");
                 for (int i = 0; i < manager.Rats.Count; i++)
                     Console.WriteLine($"{i + 1}. {manager.Rats[i].Name}");
 
-                
                 int ratChoice;
                 while (true)
                 {
@@ -51,6 +46,8 @@ namespace HF1_Rat_Race
                     Console.WriteLine("Invalid bet amount, try again.");
                 }
 
+                track.TrackLength = RNG.Range(20, 35);
+
                 var race = manager.CreateRace($"Race{manager.Races.Count + 1}", new List<Rat>
                 {
                     new Rat(rat1.Name),
@@ -60,18 +57,22 @@ namespace HF1_Rat_Race
 
                 bookmaker.PlaceBet(race, chosenRat, player, betAmount);
 
+                Console.WriteLine("\nRace starting!");
+                Thread.Sleep(1000);
 
-                Console.WriteLine("\n🏁 Race starting!");
                 int round = 1;
                 bool raceOver = false;
                 while (!raceOver)
                 {
                     Console.WriteLine($"\n--- Round {round} ---");
+                    Thread.Sleep(800);
+
                     foreach (var rat in race.Rats)
                     {
-                        int roll = RNG.Range(1, 6); 
+                        int roll = RNG.Range(1, 6);
                         rat.Move(roll);
                         Console.WriteLine($"{rat.Name} rolled {roll} and is now at {rat.Position}");
+                        Thread.Sleep(500);
 
                         if (rat.Position >= race.RaceTrack.TrackLength)
                         {
@@ -83,28 +84,30 @@ namespace HF1_Rat_Race
                     round++;
                 }
 
-                
                 string winner = race.GetWinner();
-                Console.WriteLine($"\n Winner is: {winner}");
+                Console.WriteLine($"\nWinner is: {winner}");
+                Thread.Sleep(1000);
 
                 foreach (var bet in bookmaker.Bets)
                 {
                     if (bet.Rat.Name == winner)
                     {
                         int winnings = bet.Money * 2;
-                        Console.WriteLine($"🎉 {bet.Player.Name} won {winnings} coins!");
+                        Console.WriteLine($"{bet.Player.Name} won {winnings} coins.");
                         bet.Player.Money += winnings;
                     }
                     else
                     {
-                        Console.WriteLine($"💔 {bet.Player.Name} lost {bet.Money} coins.");
+                        Console.WriteLine($"{bet.Player.Name} lost {bet.Money} coins.");
                     }
+                    Thread.Sleep(500);
                 }
 
-                bookmaker.Bets.Clear(); 
+                bookmaker.Bets.Clear();
+                Thread.Sleep(1000);
             }
 
-            Console.WriteLine("\n Game Over! You lost all your coins.");
+            Console.WriteLine("\nGame Over! You lost all your coins.");
         }
     }
 
@@ -117,7 +120,6 @@ namespace HF1_Rat_Race
     public static class RNG
     {
         private static Random random = new Random();
-
         public static int Range(int lower, int upper)
         {
             return random.Next(lower, upper + 1);
@@ -128,17 +130,12 @@ namespace HF1_Rat_Race
     {
         public string Name { get; set; }
         public int Position { get; set; }
-
         public Rat(string name)
         {
             Name = name;
             Position = 0;
         }
-
-        public void Move(int distance)
-        {
-            Position += distance;
-        }
+        public void Move(int distance) => Position += distance;
     }
 
     public class Race
@@ -147,16 +144,8 @@ namespace HF1_Rat_Race
         public List<Rat> Rats { get; set; }
         public Track RaceTrack { get; set; }
         private Rat Winner { get; set; }
-
-        public void SetWinner(Rat rat)
-        {
-            Winner = rat;
-        }
-
-        public string GetWinner()
-        {
-            return Winner?.Name ?? "No Winner";
-        }
+        public void SetWinner(Rat rat) => Winner = rat;
+        public string GetWinner() => Winner?.Name ?? "No Winner";
     }
 
     public class Bet
@@ -177,7 +166,6 @@ namespace HF1_Rat_Race
     public class Bookmaker
     {
         public List<Bet> Bets { get; set; } = new List<Bet>();
-
         public Bet PlaceBet(Race race, Rat rat, Player player, int money)
         {
             player.Money -= money;
@@ -195,7 +183,6 @@ namespace HF1_Rat_Race
         public List<Player> Players { get; private set; }
         public List<Race> Races { get; private set; }
         public List<Rat> Rats { get; private set; }
-
         public RaceManager()
         {
             Tracks = new List<Track>();
@@ -203,37 +190,24 @@ namespace HF1_Rat_Race
             Races = new List<Race>();
             Rats = new List<Rat>();
         }
-
         public Race CreateRace(string raceID, List<Rat> rats, Track track)
         {
-            var race = new Race
-            {
-                RaceID = raceID,
-                Rats = rats,
-                RaceTrack = track
-            };
+            var race = new Race { RaceID = raceID, Rats = rats, RaceTrack = track };
             Races.Add(race);
             return race;
         }
-
         public Track CreateTrack(string name, int trackLength)
         {
-            var track = new Track
-            {
-                Name = name,
-                TrackLength = trackLength
-            };
+            var track = new Track { Name = name, TrackLength = trackLength };
             Tracks.Add(track);
             return track;
         }
-
         public Rat CreateRat(string name)
         {
             var rat = new Rat(name);
             Rats.Add(rat);
             return rat;
         }
-
         public Player CreatePlayer(string name, int money)
         {
             var player = new Player { Name = name, Money = money };
