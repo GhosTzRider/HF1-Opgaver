@@ -10,20 +10,20 @@ namespace HF1_Rat_Race
             var manager = new RaceManager();
             var bookmaker = new Bookmaker();
 
-            // Create track (fixed length for all races)
+            
             var track = manager.CreateTrack("Downtown Dash", 30);
 
-            // Create rats
+            
             var rat1 = manager.CreateRat("Speedy");
             var rat2 = manager.CreateRat("Cheddar");
             var rat3 = manager.CreateRat("Nibbles");
 
-            // Create player
+            
             var player = manager.CreatePlayer("You", 100);
 
             Console.WriteLine(" Welcome to the Rat Race! ");
 
-            // Game loop
+           
             while (player.Money > 0)
             {
                 Console.WriteLine($"\n💰 You have {player.Money} coins.");
@@ -31,7 +31,7 @@ namespace HF1_Rat_Race
                 for (int i = 0; i < manager.Rats.Count; i++)
                     Console.WriteLine($"{i + 1}. {manager.Rats[i].Name}");
 
-                // --- Betting Phase ---
+                
                 int ratChoice;
                 while (true)
                 {
@@ -51,7 +51,6 @@ namespace HF1_Rat_Race
                     Console.WriteLine("Invalid bet amount, try again.");
                 }
 
-                // Create new race for each game
                 var race = manager.CreateRace($"Race{manager.Races.Count + 1}", new List<Rat>
                 {
                     new Rat(rat1.Name),
@@ -61,7 +60,7 @@ namespace HF1_Rat_Race
 
                 bookmaker.PlaceBet(race, chosenRat, player, betAmount);
 
-                // --- Race Phase ---
+
                 Console.WriteLine("\n🏁 Race starting!");
                 int round = 1;
                 bool raceOver = false;
@@ -70,7 +69,7 @@ namespace HF1_Rat_Race
                     Console.WriteLine($"\n--- Round {round} ---");
                     foreach (var rat in race.Rats)
                     {
-                        int roll = RNG.Range(1, 6); // 1–6 like Ludo
+                        int roll = RNG.Range(1, 6); 
                         rat.Move(roll);
                         Console.WriteLine($"{rat.Name} rolled {roll} and is now at {rat.Position}");
 
@@ -84,7 +83,7 @@ namespace HF1_Rat_Race
                     round++;
                 }
 
-                // --- Results Phase ---
+                
                 string winner = race.GetWinner();
                 Console.WriteLine($"\n Winner is: {winner}");
 
@@ -102,7 +101,7 @@ namespace HF1_Rat_Race
                     }
                 }
 
-                bookmaker.Bets.Clear(); // Reset bets for next round
+                bookmaker.Bets.Clear(); 
             }
 
             Console.WriteLine("\n Game Over! You lost all your coins.");
