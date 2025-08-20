@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HF1_Øvelser_med_dependency_injection
 {
-    internal interface IPaymentProcessor
+    public interface IPaymentProcessor
     {
         void Process(decimal amount);
     }
@@ -26,6 +22,7 @@ namespace HF1_Øvelser_med_dependency_injection
             Console.WriteLine($"Processing PayPal payment of {amount:C}");
         }
     }
+
     public class CheckoutService
     {
         private readonly IPaymentProcessor _paymentProcessor;
